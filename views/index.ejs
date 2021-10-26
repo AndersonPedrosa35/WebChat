@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>WebChat</title>
   </head>
+  <script src="/socket.io/socket.io.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -38,12 +39,12 @@
       height: 2rem;
       width: 3.2rem;
     }
-  </style>
+    </style>
   <body>
     <section id="container">
       <section id="containerName">
         <form id="formName">
-          <label htmlFor='nickname'>
+          <label for='nickname'>
             Digite um apelido
             <input
               id='nickname'
@@ -52,15 +53,22 @@
           </label>
           <button data-testid="nickname-button">Salvar</button>
         </form>
+        <ul>
+          <% users.forEach((user) => { %>
+             <li data-testid="online-user"><%= user %></li>
+          <% }); %>
+        </ul>
       </section>
       <section id='messages'>
         <ul>
-          
+          <% messages.forEach((message) => { %>
+             <li data-testid="message"><%= message %></li>
+          <% }); %>
         </ul>
       </section>
     </section>
       <form id="formMessage" action="">
-        <label htmlFor='message'>
+        <label for='message'>
           Digite sua mensagem
           <input
             id="message"
@@ -70,13 +78,20 @@
         </label>
         <button data-testid="send-button">Send</button>
       </form>
-    <script src="/socket.io/socket.io.js"></script>
     <script>
       let socket = io();
       
+      let formName = document.getElementById('formName');
       let formMessage = document.getElementById('formMessage');
       let message = document.getElementById('message');
       let nickname = document.getElementById('nickname');
+
+      formName.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (nickname.value) {
+          
+        }
+      })
 
       formMessage.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -85,10 +100,6 @@
           message.value = '';
           nickname.value = '';
         }
-      });
-
-      socket.on('message', ({ nickname, chatMessage, date }) => {
-        console.log(nickname, chatMessage, date);
       });
     </script>
   </body>

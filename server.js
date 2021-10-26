@@ -29,20 +29,27 @@ const { PORT } = process.env;
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+let users = [''];
+let messages = [''];
+
 io.on('connection', (socket) => {
   socket.on('message', ({ chatMessage, nickname }) => {
     let name = nickname;
     if (!nickname || nickname === '') {
       name = socket.id;
     }
-    console.log(socket.id);
-    console.log(`${fullDate}  ${name} : ${chatMessage}`);
+    users = [name, ...users];
+    messages = [`${fullDate} ${name}: ${chatMessage}`, ...messages];
+    
     io.emit('message', { chatMessage, nickname: name, date: fullDate });
+  });
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} se desconectou`);
   });
 });
 
 app.get('/', (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs', { users, messages });
 });
 
 http.listen(PORT, () => {
