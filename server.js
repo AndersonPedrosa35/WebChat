@@ -23,7 +23,7 @@ const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
 const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
 const fullDate = [date, hourAndMinute].join(' ');
 
-const { PORT } = process.env;
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
