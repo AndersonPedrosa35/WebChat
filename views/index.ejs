@@ -8,11 +8,33 @@
   <body>
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <label htmlFor='nickname'>
+        Digite um apelido
+        <input id='nickname' />
+      </label>
+      <label htmlFor='message'>
+        Digite sua mensagem
+        <input id="message" autocomplete="off" />
+      </label>
+      <button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
+      let socket = io();
+      
+      let form = document.getElementById('form');
+      let message = document.getElementById('message');
+      let nickname = document.getElementById('nickname');
+
+      form.addEventListener('submit', (e) => {
+        console.log({ nickname: nickname.value , chatMessage: message.value })
+        e.preventDefault();
+        if (message.value) {
+          socket.emit('message', { nickname: nickname.value , chatMessage: message.value });
+          message.value = '';
+          nickname.value = '';
+        }
+      });
     </script>
   </body>
 </html>
