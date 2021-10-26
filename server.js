@@ -1,4 +1,3 @@
-// Faça seu código aqui
 // DD-MM-yyyy HH:mm:ss ${nickname} ${chatMessage}
 // exemplo 09-10-2020 2:35:09 PM - Joel: Olá meu caros amigos!
 require('dotenv').config();
@@ -9,9 +8,13 @@ const app = express();
 app.use(bodyParse.json());
 const http = require('http').createServer(app);
 
+const { PORT } = process.env;
+
 app.use('view engine', 'ejs');
 app.use('views', './views');
 
-http.listen(3000, () => {
-  console.log(`Online na porta ${}`)
-})
+app.get('/', (req, res) => res.sendFile(`${__dirname}index.ejs`));
+
+http.listen(PORT, () => {
+  console.log(`Online na porta ${PORT}`);
+});
