@@ -18,6 +18,12 @@ const io = require('socket.io')(http, {
   },
 });
 
+const data = new Date();
+
+const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
+const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
+const fullDate = [date, hourAndMinute].join(' ');
+
 const { PORT } = process.env;
 
 app.set('view engine', 'ejs');
@@ -25,7 +31,7 @@ app.set('views', './views');
 
 io.on('connection', (socket) => {
   socket.on('message', ({ chatMessage, nickname }) => {
-    console.log(`${nickname} : ${chatMessage}`);
+    console.log(`${fullDate}  ${nickname} : ${chatMessage}`);
   });
 });
 
