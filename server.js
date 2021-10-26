@@ -19,7 +19,6 @@ const io = require('socket.io')(http, {
 });
 
 const data = new Date();
-
 const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
 const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
 const fullDate = [date, hourAndMinute].join(' ');
