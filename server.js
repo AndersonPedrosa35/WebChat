@@ -31,15 +31,17 @@ app.set('views', './views');
 
 io.on('connection', (socket) => {
   socket.on('message', ({ chatMessage, nickname }) => {
-    console.log(`${fullDate}  ${nickname} : ${chatMessage}`);
+    let name = nickname;
+    if (!nickname || nickname === '') {
+      name = socket.id;
+    }
+    console.log(socket.id);
+    console.log(`${fullDate}  ${name} : ${chatMessage}`);
+    io.emit('message', { chatMessage, nickname: name, date: fullDate });
   });
 });
 
 app.get('/', (req, res) => {
-  res.render('index.ejs');
-});
-
-app.post('/', (_req, res, _next) => {
   res.render('index.ejs');
 });
 

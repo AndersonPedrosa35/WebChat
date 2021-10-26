@@ -3,37 +3,92 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>WebChat</title>
   </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      display: flex;
+    }
+
+    #formMessage {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    input {
+      border: 1px solid rgb(56, 51, 51);
+      border-radius: 5px;
+      margin: 2px 4px;
+      padding: 5px;
+    }
+
+    button {
+      background-color: rgb(27, 27, 95);
+      border: none;
+      border-radius: 5px;
+      color: aliceblue;
+      height: 2rem;
+      width: 3.2rem;
+    }
+  </style>
   <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <label htmlFor='nickname'>
-        Digite um apelido
-        <input id='nickname' />
-      </label>
-      <label htmlFor='message'>
-        Digite sua mensagem
-        <input id="message" autocomplete="off" />
-      </label>
-      <button>Send</button>
-    </form>
+    <section id="container">
+      <section id="containerName">
+        <form id="formName">
+          <label htmlFor='nickname'>
+            Digite um apelido
+            <input
+              id='nickname'
+              data-testid="nickname-box"
+            />
+          </label>
+          <button data-testid="nickname-button">Salvar</button>
+        </form>
+      </section>
+      <section id='messages'>
+        <ul>
+          
+        </ul>
+      </section>
+    </section>
+      <form id="formMessage" action="">
+        <label htmlFor='message'>
+          Digite sua mensagem
+          <input
+            id="message"
+            autocomplete="off"
+            data-testid="message-box"
+          />
+        </label>
+        <button data-testid="send-button">Send</button>
+      </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       let socket = io();
       
-      let form = document.getElementById('form');
+      let formMessage = document.getElementById('formMessage');
       let message = document.getElementById('message');
       let nickname = document.getElementById('nickname');
 
-      form.addEventListener('submit', (e) => {
-        console.log({ nickname: nickname.value , chatMessage: message.value })
+      formMessage.addEventListener('submit', (e) => {
         e.preventDefault();
         if (message.value) {
           socket.emit('message', { nickname: nickname.value , chatMessage: message.value });
           message.value = '';
           nickname.value = '';
         }
+      });
+
+      socket.on('message', ({ nickname, chatMessage, date }) => {
+        console.log(nickname, chatMessage, date);
       });
     </script>
   </body>
