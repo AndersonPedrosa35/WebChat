@@ -25,6 +25,11 @@ nicknameUser(randomNickName());
 
 socket.on('message', (item) => {
   console.log(item, 'MENSAGEM DO LADO DO CLIENTE');
+  const liMessage = document.createElement('li');
+  liMessage.className = 'messageList';
+  liMessage.setAttribute('data-testid', 'message');
+  liMessage.innerText = item;
+  ulMessage.appendChild(liMessage);
 });
 
 formName.addEventListener('submit', (e) => {
