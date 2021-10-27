@@ -29,25 +29,12 @@ function Hours() {
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-async function disconect(socket, users) {
-  socket.on('disconnect', () => {
-    const index = users.indexOf(socket.id);
-    users.splice(index, 1);
-    return console.log(`${socket.id} se desconectou`);
-  });
-}
-
-let users = [''];
+const users = [];
 
 io.on('connection', (socket) => {
-  socket.on('message', ({ chatMessage, nickname }) => {
-    const name = nickname;
-    users = [name, ...users];
-    const message = `${Hours()} ${name}: ${chatMessage}`;
-    io.emit('message', message);
+  socket.on('message', () => {
+    
   });
-  
-  disconect(socket, users);
 });
 
 app.use(express.static(`${__dirname}/public`));
