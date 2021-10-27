@@ -6,7 +6,7 @@ const message = document.getElementById('message');
 const nickname = document.getElementById('nickname');
 const ulUsersName = document.getElementById('users-on');
 
-const randomNickName = Math.random().toString(16);
+const randomNickName = Math.random().toString(16).substr(2, 8);
 
 const liUsers = document.createElement('li');
 liUsers.setAttribute('data-testid', 'online-user');
