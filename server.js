@@ -48,12 +48,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('message', ({ chatMessage, nickname }) => {
-    console.log(chatMessage, 'MENSAGEM DO CHAT');
-    console.log(nickname, 'APELIDO DO USUARIO');
-    let name = nickname;
-    if (!nickname || nickname === '') {
-      name = socket.id;
-    }
+    const name = nickname;
+    console.log(nickname, 'NICKNAME SERVER');
     users = [name, ...users];
     const message = `${Hours()} ${name}: ${chatMessage}`;
     messages = [`${Hours()} ${name}: ${chatMessage}`, ...messages];
