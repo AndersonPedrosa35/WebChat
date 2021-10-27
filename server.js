@@ -38,21 +38,12 @@ async function disconect(socket, users) {
 }
 
 let users = [''];
-let messages = [''];
 
 io.on('connection', (socket) => {
-  socket.on('nickname', ({ nickname }) => {
-    if (nickname) {
-      users.push(nickname);
-    }
-  });
-
   socket.on('message', ({ chatMessage, nickname }) => {
     const name = nickname;
-    console.log(nickname, 'NICKNAME SERVER');
     users = [name, ...users];
     const message = `${Hours()} ${name}: ${chatMessage}`;
-    messages = [`${Hours()} ${name}: ${chatMessage}`, ...messages];
     io.emit('message', message);
   });
   

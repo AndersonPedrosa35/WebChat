@@ -1,7 +1,7 @@
 const socket = window.io();
       
-const formName = document.getElementById('formName');
-const formMessage = document.getElementById('formMessage');
+const formName = document.getElementsByClassName('formName')[0];
+const formMessage = document.getElementsByClassName('formMessage')[0];
 const message = document.getElementById('message');
 const ulMessage = document.getElementById('ul-message');
 const nickname = document.getElementById('nickname');
@@ -42,12 +42,11 @@ formName.addEventListener('submit', (e) => {
 formMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   const liUser = document.getElementsByClassName('users');
-  console.log(liUser);
-  let usersList = liUser.value;
-  if (!liUser.value) {
-    usersList = nicknameUser(randomNickName());
+  const lastUser = liUser[liUser.length - 1];
+  let usersList = lastUser.innerText;
+  if (!lastUser.innerText || lastUser.innerText === '') {
+    usersList = randomNickName();
   }
-  console.log(usersList, 'USUARIO DO LADO DO CLIENTE');
   if (message.value) {
     socket.emit('message', { nickname: usersList, chatMessage: message.value });
     message.value = '';
