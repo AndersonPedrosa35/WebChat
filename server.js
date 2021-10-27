@@ -28,24 +28,39 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+async function disconect(socket, users) {
+  socket.on('disconnect', () => {
+    const index = users.indexOf(socket.id);
+    users.splice(index, 1);
+    return console.log(`${socket.id} se desconectou`);
+  });
+}
+
 let users = [''];
 let messages = [''];
 
 io.on('connection', (socket) => {
+  console.log(socket.id);
+  users.push(socket.id);
+  socket.on('nickname', ({ nickname }) => {
+    if (nickname) {
+      users.push(nickname);
+    }
+  });
   socket.on('message', ({ chatMessage, nickname }) => {
     let name = nickname;
     if (!nickname || nickname === '') {
       name = socket.id;
     }
     users = [name, ...users];
+    const message = `${fullDate} ${name}: ${chatMessage}`;
     messages = [`${fullDate} ${name}: ${chatMessage}`, ...messages];
-    
-    io.emit('message', { chatMessage, nickname: name, date: fullDate });
+    io.emit('message', message);
   });
-  socket.on('disconnect', () => {
-    console.log(`${socket.id} se desconectou`);
-  });
+  disconect(socket, users);
 });
+
+app.use(express.static(`${__dirname}/public`));
 
 app.get('/', (req, res) => {
   res.render('index.ejs', { users, messages });

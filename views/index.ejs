@@ -3,43 +3,10 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <title>WebChat</title>
   </head>
   <script src="/socket.io/socket.io.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    #container {
-      display: flex;
-    }
-
-    #formMessage {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-    }
-
-    input {
-      border: 1px solid rgb(56, 51, 51);
-      border-radius: 5px;
-      margin: 2px 4px;
-      padding: 5px;
-    }
-
-    button {
-      background-color: rgb(27, 27, 95);
-      border: none;
-      border-radius: 5px;
-      color: aliceblue;
-      height: 2rem;
-      width: 3.2rem;
-    }
-    </style>
   <body>
     <section id="container">
       <section id="containerName">
@@ -53,10 +20,7 @@
           </label>
           <button data-testid="nickname-button">Salvar</button>
         </form>
-        <ul>
-          <% users.forEach((user) => { %>
-             <li data-testid="online-user"><%= user %></li>
-          <% }); %>
+        <ul id="users-on">
         </ul>
       </section>
       <section id='messages'>
@@ -78,29 +42,6 @@
         </label>
         <button data-testid="send-button">Send</button>
       </form>
-    <script>
-      let socket = io();
-      
-      let formName = document.getElementById('formName');
-      let formMessage = document.getElementById('formMessage');
-      let message = document.getElementById('message');
-      let nickname = document.getElementById('nickname');
-
-      formName.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (nickname.value) {
-          
-        }
-      })
-
-      formMessage.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (message.value) {
-          socket.emit('message', { nickname: nickname.value , chatMessage: message.value });
-          message.value = '';
-          nickname.value = '';
-        }
-      });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
