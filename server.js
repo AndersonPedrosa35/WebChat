@@ -10,20 +10,21 @@ const app = express();
 app.use(cors());
 app.use(bodyParse.json());
 
+const PORT = process.env.PORT || 3000;
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: 'http://127.0.0.1:3000',
+    origin: `http://127.0.0.1:${PORT}`,
     methods: ['GET', 'POST'],
   },
 });
 
-const data = new Date();
-const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
-const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
-const fullDate = [date, hourAndMinute].join(' ');
-
-const PORT = process.env.PORT || 3000;
+function Hours() {
+  const data = new Date();
+  const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
+  const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
+  return `${date} ${hourAndMinute}`;
+}
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -40,30 +41,32 @@ let users = [''];
 let messages = [''];
 
 io.on('connection', (socket) => {
-  console.log(socket.id);
-  users.push(socket.id);
   socket.on('nickname', ({ nickname }) => {
     if (nickname) {
       users.push(nickname);
     }
   });
+
   socket.on('message', ({ chatMessage, nickname }) => {
+    console.log(chatMessage, 'MENSAGEM DO CHAT');
+    console.log(nickname, 'APELIDO DO USUARIO');
     let name = nickname;
     if (!nickname || nickname === '') {
       name = socket.id;
     }
     users = [name, ...users];
-    const message = `${fullDate} ${name}: ${chatMessage}`;
-    messages = [`${fullDate} ${name}: ${chatMessage}`, ...messages];
+    const message = `${Hours()} ${name}: ${chatMessage}`;
+    messages = [`${Hours()} ${name}: ${chatMessage}`, ...messages];
     io.emit('message', message);
   });
+  
   disconect(socket, users);
 });
 
 app.use(express.static(`${__dirname}/public`));
 
 app.get('/', (req, res) => {
-  res.render('index.ejs', { users, messages });
+  res.render('index.ejs');
 });
 
 http.listen(PORT, () => {
