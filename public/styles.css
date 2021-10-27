@@ -4,11 +4,11 @@
   padding: 0;
 }
 
-#container {
+.container {
   display: flex;
 }
 
-#formMessage {
+.formMessage {
   align-items: center;
   display: flex;
   justify-content: center;
