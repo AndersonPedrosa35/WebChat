@@ -7,6 +7,8 @@ const ulMessage = document.getElementById('ul-message');
 const inputUserName = document.getElementById('inputUserName');
 const ulUsersName = document.getElementById('users-on');
 
+const isReplace = false;
+
 function randomNickname() {
   const random = Math.random().toString(16).substr(2, 8)
   + Math.random().toString(16).substr(2, 8);
@@ -23,15 +25,32 @@ function createNickname(name, action) {
 }
 
 // Criação do nome aleatório do usuario
-createNickname(randomNickname, document.createElement('li'));
+const randomUserName = randomNickname();
+createNickname(randomUserName, document.createElement('li'));
+socket.emit('nickname', { newName: randomUserName, lastName: '' });
 
-function createMessage() {
-  formMessage.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (inputMessage.value) {
-      socket.emit('message', { 
-        chatMessage: inputMessage.value, nickname: '',
-      });
-    }
-  });
-}
+formName.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const liUsers = document.getElementsByClassName('usersName');
+  if (inputUserName.value) {
+    [...liUsers].forEach((user) => {
+      if (user.innerText === randomUserName) {
+        socket.emit('nickname', { 
+          newName: inputUserName.value, lastName: user.innerText, 
+        });
+      }
+    });
+    inputUserName.value = '';
+  }
+});
+
+formMessage.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (inputMessage.value) {
+    socket.emit('message', { 
+      chatMessage: inputMessage.value, nickname: '',
+    });
+  }
+  inputMessage.value = '';
+  inputUserName.value = '';
+});

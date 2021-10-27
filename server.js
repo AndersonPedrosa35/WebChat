@@ -29,11 +29,17 @@ function Hours() {
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-const users = [];
+let users = [];
 
 io.on('connection', (socket) => {
-  socket.on('message', () => {
-    
+  socket.on('message', ({ chatMessage, nickname }) => '');
+  socket.on('nickname', ({ newName, lastName }) => {
+    users = [newName, ...users];
+    if (lastName || lastName !== '') {
+      const indexUser = users.indexOf(lastName);
+      users.slice(indexUser, 1);
+    }
+    io.emit('nickname', users);
   });
 });
 
