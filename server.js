@@ -32,14 +32,22 @@ app.set('views', './views');
 let users = [];
 
 io.on('connection', (socket) => {
-  socket.on('message', ({ chatMessage, nickname }) => '');
+  socket.on('message', ({ chatMessage, nickname }) => {
+    const message = `${Hours()} ${nickname} ${chatMessage}`;
+    socket.emit('message', message);
+  });
   socket.on('nickname', ({ newName, lastName }) => {
     users = [newName, ...users];
     if (lastName || lastName !== '') {
       const indexUser = users.indexOf(lastName);
       users.slice(indexUser, 1);
+      console.log(users);
     }
     io.emit('nickname', users);
+  });
+
+  socket.on('disconnect', () => {
+
   });
 });
 

@@ -4,6 +4,7 @@ const formName = document.getElementsByClassName('formName')[0];
 const formMessage = document.getElementsByClassName('formMessage')[0];
 const inputMessage = document.getElementById('inputMessage');
 const ulMessage = document.getElementById('ul-message');
+const sectionNames = document.getElementById('containerName');
 const inputUserName = document.getElementById('inputUserName');
 const ulUsersName = document.getElementById('users-on');
 
@@ -15,6 +16,12 @@ function randomNickname() {
   return random;
 }
 
+function createListUsers() {
+  const ul = document.createElement('ul');
+  ul.id = 'users-on';
+  sectionNames.appendChild(ul);
+}
+
 function createNickname(name, action) {
   const liUsers = action;
   liUsers.className = 'usersName';
@@ -23,6 +30,18 @@ function createNickname(name, action) {
   ulUsersName.appendChild(liUsers);
   return name;
 }
+
+  socket.on('message', () => {
+
+  });
+
+  socket.on('nickname', (users) => {
+    ulUsersName.innerText = '';
+    console.log(users);
+    users.forEach((user) => {
+      createNickname(user, document.createElement('li'));
+    });
+  });
 
 // Criação do nome aleatório do usuario
 const randomUserName = randomNickname();
