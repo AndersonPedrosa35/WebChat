@@ -49,10 +49,14 @@ const randomUserName = randomNickname();
 createNickname(randomUserName, document.createElement('li'));
 socket.emit('nickname', { newName: randomUserName, lastName: '' });
 
+// Variavel utilizada para montar a mensagem
+let userName = randomUserName;
+
 formName.addEventListener('submit', (e) => {
   e.preventDefault();
   const liUsers = document.getElementsByClassName('usersName');
   if (inputUserName.value) {
+    userName = inputUserName.value;
     [...liUsers].forEach((user) => {
       if (user.innerText === randomUserName) {
         socket.emit('nickname', { 
@@ -68,7 +72,7 @@ formMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   if (inputMessage.value) {
     socket.emit('message', {
-      chatMessage: inputMessage.value, nickname: '',
+      chatMessage: inputMessage.value, nickname: userName,
     });
   }
   inputMessage.value = '';
