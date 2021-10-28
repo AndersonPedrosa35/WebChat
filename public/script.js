@@ -4,11 +4,8 @@ const formName = document.getElementsByClassName('formName')[0];
 const formMessage = document.getElementsByClassName('formMessage')[0];
 const inputMessage = document.getElementById('inputMessage');
 const ulMessage = document.getElementById('ul-message');
-const sectionNames = document.getElementById('containerName');
 const inputUserName = document.getElementById('inputUserName');
 const ulUsersName = document.getElementById('users-on');
-
-const isReplace = false;
 
 function randomNickname() {
   const random = Math.random().toString(16).substr(2, 8)

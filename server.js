@@ -33,11 +33,12 @@ let users = [];
 
 io.on('connection', (socket) => {
   socket.on('message', ({ chatMessage, nickname }) => {
-    const message = `${Hours()} ${nickname} ${chatMessage}`;
-    socket.emit('message', message);
+    const message = `${Hours()} - ${nickname}: ${chatMessage}`;
+    console.log(message);
+    io.emit('message', message);
   });
   socket.on('nickname', ({ newName, lastName }) => {
-    users = [newName, ...users];
+    users = [...users, newName];
     if (lastName || lastName !== '') {
       const indexUser = users.indexOf(lastName);
       users.splice(indexUser, 1);
