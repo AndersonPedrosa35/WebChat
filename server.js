@@ -40,8 +40,7 @@ io.on('connection', (socket) => {
     users = [newName, ...users];
     if (lastName || lastName !== '') {
       const indexUser = users.indexOf(lastName);
-      users.slice(indexUser, 1);
-      console.log(users);
+      users.splice(indexUser, 1);
     }
     io.emit('nickname', users);
   });

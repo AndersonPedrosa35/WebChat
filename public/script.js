@@ -16,12 +16,6 @@ function randomNickname() {
   return random;
 }
 
-function createListUsers() {
-  const ul = document.createElement('ul');
-  ul.id = 'users-on';
-  sectionNames.appendChild(ul);
-}
-
 function createNickname(name, action) {
   const liUsers = action;
   liUsers.className = 'usersName';
@@ -31,13 +25,20 @@ function createNickname(name, action) {
   return name;
 }
 
-  socket.on('message', () => {
+function createMessage(message) {
+  const liMessage = document.createElement('li');
+  liMessage.className = 'message';
+  liMessage.setAttribute('data-testid', 'message');
+  liMessage.innerText = message;
+  ulMessage.appendChild(liMessage);
+}
 
+  socket.on('message', (message) => {
+    createMessage(message);
   });
 
   socket.on('nickname', (users) => {
     ulUsersName.innerText = '';
-    console.log(users);
     users.forEach((user) => {
       createNickname(user, document.createElement('li'));
     });
@@ -66,7 +67,7 @@ formName.addEventListener('submit', (e) => {
 formMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   if (inputMessage.value) {
-    socket.emit('message', { 
+    socket.emit('message', {
       chatMessage: inputMessage.value, nickname: '',
     });
   }
