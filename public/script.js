@@ -30,17 +30,6 @@ function createMessage(message) {
   ulMessage.appendChild(liMessage);
 }
 
-  socket.on('message', (message) => {
-    createMessage(message);
-  });
-
-  socket.on('nickname', (users) => {
-    ulUsersName.innerText = '';
-    users.forEach((user) => {
-      createNickname(user, document.createElement('li'));
-    });
-  });
-
 // Criação do nome aleatório do usuario
 const randomUserName = randomNickname();
 createNickname(randomUserName, document.createElement('li'));
@@ -63,6 +52,21 @@ formName.addEventListener('submit', (e) => {
     });
     inputUserName.value = '';
   }
+});
+
+socket.on('message', (message) => {
+  createMessage(message);
+});
+
+socket.on('nickname', (users) => {
+  ulUsersName.innerText = '';
+  const index = users.findIndex((user) => user.name === userName);
+  users.splice(index, 1);
+  let resetPositionArray = users;
+  resetPositionArray = [{ id: 1, name: userName }, ...resetPositionArray];
+  resetPositionArray.forEach(({ name }) => {
+    createNickname(name, document.createElement('li'));
+  });
 });
 
 formMessage.addEventListener('submit', (e) => {

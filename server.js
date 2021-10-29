@@ -29,25 +29,27 @@ function Hours() {
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-let users = [];
+let userAndId = [];
 
 io.on('connection', (socket) => {
   socket.on('message', ({ chatMessage, nickname }) => {
     const message = `${Hours()} - ${nickname}: ${chatMessage}`;
-    console.log(message);
     io.emit('message', message);
   });
   socket.on('nickname', ({ newName, lastName }) => {
-    users = [...users, newName];
-    if (lastName || lastName !== '') {
-      const indexUser = users.indexOf(lastName);
-      users.splice(indexUser, 1);
+    const index = userAndId.findIndex((user) => user.name === lastName);
+    if (lastName === '' || !lastName) {
+      userAndId = [{ id: socket.id, name: newName }, ...userAndId];
     }
-    io.emit('nickname', users);
+    if (index !== -1) {
+      userAndId.splice(index, 1, { id: socket.id, name: newName });
+    }
+    io.emit('nickname', userAndId);
   });
 
   socket.on('disconnect', () => {
-
+    const index = userAndId.findIndex((user) => user.id === socket.id);
+    userAndId.splice(index, 1);
   });
 });
 
