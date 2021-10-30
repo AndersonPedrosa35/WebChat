@@ -60,10 +60,14 @@ socket.on('message', (message) => {
 
 socket.on('nickname', (users) => {
   ulUsersName.innerText = '';
+  console.log('ENTROU AQUI', [...users]);
   const index = users.findIndex((user) => user.name === userName);
-  users.splice(index, 1);
-  let resetPositionArray = users;
-  resetPositionArray = [{ id: 1, name: userName }, ...resetPositionArray];
+  let resetPositionArray = [...users];
+  if (index !== -1) {
+    users.splice(index, 1);
+    resetPositionArray = [...users];
+    resetPositionArray = [{ id: 1, name: userName }, ...resetPositionArray];
+  }
   resetPositionArray.forEach(({ name }) => {
     createNickname(name, document.createElement('li'));
   });
