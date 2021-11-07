@@ -37,4 +37,5 @@ const createMessage = async ({ nickname, message, hours }) => {
 
 module.exports = {
   getAllMessages,
+  createMessage,
 };
