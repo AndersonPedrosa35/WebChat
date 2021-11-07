@@ -18,6 +18,7 @@ const io = require('socket.io')(http, {
     methods: ['GET', 'POST'],
   },
 });
+const messageController = require('./controllers/messageController');
 
 function Hours() {
   const data = new Date();
@@ -57,6 +58,9 @@ app.use(express.static(`${__dirname}/public`));
 app.get('/', (req, res) => {
   res.render('index.ejs');
 });
+
+app.get('/messages', messageController.getAllMessages)
+.post('/messages', messageController.createMessage());
 
 http.listen(PORT, () => {
   console.log(`Online na porta ${PORT}`);
