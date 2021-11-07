@@ -1,6 +1,6 @@
 const messageModel = require('../models/messageModel');
 
-const getAllMessages = async (req, res, next) => {
+const getAllMessages = async (_req, res) => {
   const messages = await messageModel.getAllMessages();
 
   return res.status(200).json(messages);
