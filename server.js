@@ -22,7 +22,7 @@ const io = require('socket.io')(http, {
 function Hours() {
   const data = new Date();
   const date = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
-  const hourAndMinute = `${data.getHours()}:${data.getMinutes()}`;
+  const hourAndMinute = `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`;
   return `${date} ${hourAndMinute}`;
 }
 
