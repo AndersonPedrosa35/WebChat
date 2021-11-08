@@ -32,11 +32,7 @@ app.set('views', './views');
 
 let userAndId = [];
 
-io.on('connection', (socket) => {
-  socket.on('message', ({ chatMessage, nickname }) => {
-    const message = `${Hours()} - ${nickname}: ${chatMessage}`;
-    io.emit('message', message);
-  });
+function socketNickname(socket, server) {
   socket.on('nickname', ({ newName, lastName }) => {
     if (lastName === '' || !lastName) {
       userAndId = [{ id: socket.id, name: newName }, ...userAndId];
@@ -44,8 +40,18 @@ io.on('connection', (socket) => {
     const index = userAndId.findIndex((user) => user.name === lastName);
     if (index !== -1) {
       userAndId.splice(index, 1, { id: socket.id, name: newName });
-    } io.emit('nickname', userAndId);
+      messageController.updateNickname(lastName, newName);
+    } server.emit('nickname', userAndId);
   });
+}
+
+io.on('connection', (socket) => {
+  socket.on('message', async ({ chatMessage, nickname }) => {
+    messageController.createMessage({ message: chatMessage, nickname, timestamp: Hours() });
+    const message = `${Hours()} - ${nickname}: ${chatMessage}`;
+    io.emit('message', message);
+  });
+  socketNickname(socket, io);
   socket.on('disconnect', () => {
     const index = userAndId.findIndex((user) => user.id === socket.id);
     userAndId.splice(index, 1);
@@ -55,12 +61,9 @@ io.on('connection', (socket) => {
 
 app.use(express.static(`${__dirname}/public`));
 
-app.get('/', (req, res) => {
-  res.render('index.ejs');
-});
-
-app.get('/messages', messageController.getAllMessages)
-.post('/messages', messageController.createMessage());
+app.get('/', messageController.getAllMessages, async (req, res) => 
+  res.render('index.ejs', { findMessages: req.messages }));
+app.post('/');
 
 http.listen(PORT, () => {
   console.log(`Online na porta ${PORT}`);

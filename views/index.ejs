@@ -25,6 +25,10 @@
       </section>
       <section id='messages'>
         <ul id='ul-message'>
+          <% findMessages.forEach(({ nickname, message, timestamp }) => { %>
+          <% const struturedMessage = `${timestamp} - ${nickname}: ${message}`; %>
+          <li data-testid="message"><%= struturedMessage %></li>
+          <% }) %>
         </ul>
       </section>
     </section>

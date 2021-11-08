@@ -11,6 +11,7 @@ const isValidMessage = (message) => {
   if (!message || message.trim() === '') {
     return { status: 400, message: '"message" is required' };
   }
+  return true;
 };
 
 const getAllMessages = async () => {
@@ -20,7 +21,7 @@ const getAllMessages = async () => {
   return result;
 };
 
-const createMessage = async ({ nickname, message, hours }) => {
+const createMessage = async ({ message, nickname, timestamp }) => {
   const validName = isValidNickname(nickname);
   const validMessage = isValidMessage(message);
   if (validName.message) {
@@ -31,11 +32,24 @@ const createMessage = async ({ nickname, message, hours }) => {
   }
 
   const data = await connection().then((db) => db.collection('messages'));
-  const { insertedId } = await data.insertOne({ message, nickname, timestamp: hours });
-  return { _id: insertedId, nickname, message, timestamp: hours };
+  const { insertedId } = await data.insertOne({ message, nickname, timestamp });
+  return { _id: insertedId, nickname, message, timestamp };
+};
+
+const updateNickname = async (lastNickname, newNickname) => {
+  const validName = isValidNickname(newNickname);
+  if (validName.message) {
+    return validName;
+  }
+
+  const banco = await connection().then((db) => db.collection('messages'));
+  const update = await banco.updateOne({ nickname: lastNickname }, 
+    { $set: { nickname: newNickname } });
+  return update;
 };
 
 module.exports = {
   getAllMessages,
   createMessage,
+  updateNickname,
 };

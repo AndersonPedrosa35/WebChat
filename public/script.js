@@ -41,7 +41,7 @@ let userName = randomUserName;
 formName.addEventListener('submit', (e) => {
   e.preventDefault();
   const liUsers = document.getElementsByClassName('usersName');
-  if (inputUserName.value) {
+  if (inputUserName.value.trim() !== '') {
     userName = inputUserName.value;
     [...liUsers].forEach((user) => {
       if (user.innerText === randomUserName) {
@@ -60,7 +60,6 @@ socket.on('message', (message) => {
 
 socket.on('nickname', (users) => {
   ulUsersName.innerText = '';
-  console.log('ENTROU AQUI', [...users]);
   const index = users.findIndex((user) => user.name === userName);
   let resetPositionArray = [...users];
   if (index !== -1) {
