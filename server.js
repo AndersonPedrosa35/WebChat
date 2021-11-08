@@ -42,6 +42,7 @@ function socketNickname(socket, server) {
       userAndId.splice(index, 1, { id: socket.id, name: newName });
       messageController.updateNickname(lastName, newName);
     } server.emit('nickname', userAndId);
+    console.log(userAndId);
   });
 }
 
