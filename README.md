@@ -4,27 +4,10 @@ O projeto WebChat foi feito com a intenção de práticar os conhecimentos de So
 # Sumário
 
 - [Habilidades](#habilidades)
-- [Entregáveis](#entregáveis)
-  - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
-  - [Desenvolvimento](#desenvolvimento)
-  - [Data de entrega](#data-de-entrega)
-- [Instruções para entregar seu projeto](#instruções-para-entregar-seu-projeto)
-  - [Antes de começar a desenvolver](#-antes-de-começar-a-desenvolver)
-  - [Durante o desenvolvimento](#durante-o-desenvolvimento)
-- [Como desenvolver](#como-desenvolver)
+- [O que foi desenvolvido](#o-que-foi-desenvolvido)
+- [Durante o desenvolvimento](#durante-o-desenvolver)
   - [Linter (Análise Estática)](#linter-análise-estática)
-  - [Variáveis](#variáveis)
-  - [Conexão com o banco](#conexão-com-o-banco)
-- [Requisitos do projeto](#requisitos-do-projeto)
-  - [Lista de Requisitos](#lista-de-requisitos)
-    `Requisitos Obrigatórios`
-    - [1 - Crie um back-end para conexão simultaneamente de clientes e troca de mensagens em chat público](#1---crie-um-back-end-para-conexão-simultânea-de-clientes-e-troca-de-mensagens-em-chat-público)
-    - [2 - Crie um frontend para que as pessoas interajam com o chat](#2---crie-um-frontend-para-que-as-pessoas-interajam-com-o-chat)
-    - [3 - Elabore o histórico do chat para que as mensagens persistam](#3---elabore-o-histórico-do-chat-para-que-as-mensagens-persistam)
-    - [4 - Informe a todos os clientes quem está online no momento](#4---informe-a-todos-os-clientes-quem-está-online-no-momento)
-- [Depois de terminar o desenvolvimento (opcional)](#depois-de-terminar-o-desenvolvimento-opcional)
-- [Revisando um pull request](#revisando-um-pull-request)
-- [Avisos Finais](#avisos-finais)
+- [Como utilizar](#como-utilizar)
 
 ---
 
