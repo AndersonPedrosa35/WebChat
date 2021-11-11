@@ -8,37 +8,45 @@
   </head>
   <script src="/socket.io/socket.io.js"></script>
   <body>
+    <header>
+      <h3>Projeto WebChat</h3>
+      <h3>Mensagens</h3>
+    </header>
     <section class="container">
-      <section id="containerName">
+      <section class="containerName">
         <form class="formName">
           <label for='inputUserName'>
-            Digite um apelido
             <input
               id='inputUserName'
               data-testid="nickname-box"
+              placeholder="Digite um apelido"
             />
           </label>
           <button data-testid="nickname-button">Salvar</button>
         </form>
+        <h3>Usuários Ativos</h3>
         <ul id="users-on">
         </ul>
       </section>
-      <section id='messages'>
+      <section class='messages'>
         <ul id='ul-message'>
           <% findMessages.forEach(({ nickname, message, timestamp }) => { %>
-          <% const struturedMessage = `${timestamp} - ${nickname}: ${message}`; %>
-          <li data-testid="message"><%= struturedMessage %></li>
+          <li data-testid="message" class="message">
+            <spam class="timestamp"><%= `${timestamp} - ` %></spam>
+            <em class="user"><%= `${nickname} : ` %></em>
+            <spam><%= message %></spam>
+          </li>
           <% }) %>
         </ul>
       </section>
     </section>
       <form class="formMessage" action="">
         <label for='inputMessage'>
-          Digite sua mensagem
           <input
             id="inputMessage"
             autocomplete="off"
             data-testid="message-box"
+            placeholder="Digite sua mensagem"
           />
         </label>
         <button data-testid="send-button">Send</button>

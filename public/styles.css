@@ -4,21 +4,55 @@
   padding: 0;
 }
 
+body {
+  background-image: url('./assets/whatsapp.jpg');
+  background-position: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
 .container {
   display: flex;
 }
 
+.containerName {
+  padding: 2rem 1rem 2rem 2rem;
+}
+
+.messages {
+  height: 80vh;
+  overflow-y: scroll;
+  padding-right: 0.5rem;
+  width: 70%;
+}
+
+.containerName h3 {
+  margin: 1rem 0;
+}
+
+.message {
+  background-color: rgb(164, 199, 184);
+  border-radius: 0.5rem;
+  list-style: none;
+  margin: 2px 0;
+}
+
+.timestamp {
+  font-size: 12px;
+}
+
 .formMessage {
-  align-items: center;
+  align-items: flex-end;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 6rem;
 }
 
 input {
   border: 1px solid rgb(56, 51, 51);
   border-radius: 5px;
-  margin: 2px 4px;
-  padding: 5px;
+  margin: 2px;
+  padding: 0.4rem;
 }
 
 button {
@@ -28,4 +62,29 @@ button {
   color: aliceblue;
   height: 2rem;
   width: 3.2rem;
+}
+
+.messages::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.messages::-webkit-scrollbar-track {
+  background-color: rgb(179, 189, 207);      /* color of the tracking area */
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: rgb(64, 64, 82);    /* color of the scroll thumb */
+  border: 3px solid rgb(179, 189, 207);  /* creates padding around scroll thumb */
+  border-radius: 10px;       /* roundness of the scroll thumb */
+}
+
+.formMessage input {
+  margin-top: 1rem;
+  width: 45rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.7rem 20rem 1.5rem 0;
 }
